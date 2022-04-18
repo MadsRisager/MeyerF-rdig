@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<a href="#">
+    <h1 class="logo">Meyer!</h1>
+</a>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Beregn din sandsynlighed</h2>
+        <h4>
+            Hvad er sandsynligheden for at du slår over. Beregn den her!
+        </h4>
+        <p><a class="btn btn-default btn-default:hover knap" href="@Url.Action("beregn2", "Home")">Beregn sandsynlighed</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Spilleregler</h2>
+        <p>Lær reglerne for Meyer at kende</p>
+        <p><a class="btn btn-default btn-default:hover knap" href="@Url.Action("regler", "Home")">Spilleregler &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Med vennerne</h2>
+        <p>Prøver dine venner også at snyde med point og liv? Hold styr på tingene med vores smarte lobby-system!</p>
+        <p><a class="btn btn-default knap" href="https://go.microsoft.com/fwlink/?LinkId=301867">Tilslut lobby &raquo;</a></p>
+
+        @*<p class="btn btn-default">@Html.ActionLink("Profile", "Profile", "Home")</p>*@
+        <p><a class="btn btn-default btn-default:hover knap" href="@Url.Action("Profile", "Home")">Profil</a></p>
+    </div>
+</div>
+
+<hr />
+<footer>
+</footer>
+<script>
+
+</script>
+<style>
+    .knap {
+        background-color: white;
+        border-radius: 20px;
+        margin: 50px;
+        color: black;
+        /*width: 25%;*/
+        text-decoration: none;
+    }
+
+    p {
+        text-decoration: none;
+    }
+
+    body {
+        font-family: Poppins, sans-serif;
+        font-weight: 400;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        text-decoration: underline;
+        font-weight: 700;
+        font-style: italic;
+        font-size: 4em;
+        color: white;
+    }
+</style>

@@ -1,0 +1,294 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+ 
+  <!--#Terning 1-->
+    <div onclick="changeClass(1)" class="dice face-1" id="1">
+          <span class="dot"> </span>
+    </div>
+   
+  <!--#Terning 2-->
+    <div onclick="changeClass(2)" class="dice face-2" id="2">
+        <span class="dot"> </span>
+        <span class="dot"> </span>
+    </div>
+    
+  <!--#Terning 3-->
+    <div onclick="changeClass(3)" class="dice face-3" id="3">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+  <!--#Terning 4-->
+  <div onclick="changeClass(4)" class="dice face-4" id="4">
+    <div class="column">
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    <div class="column">
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+  <!--#Terning 5-->
+  <div onclick="changeClass(5)" class="dice face-5" id="5">
+  
+    <div class="column">
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    
+    <div class="column">
+      <span class="dot"></span>
+    </div>
+    
+    <div class="column">
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+
+  <!--#Terning 6-->
+  <div onclick="changeClass(6)" class="dice face-6" id="6">
+    <div class="column">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    <div class="column">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+     </div>
+    </div>
+
+  <!--#KNAPPER-->
+    <div>
+      <br>
+        <h1 id="myText"></h1>
+
+        <h1 id="terning"></h1>
+
+        <h1 id="kast"></h1>
+    </div>
+
+    <div>
+      <button onclick="Beregn()">Beregn</button>
+
+      <button onclick="Reset()">Reset</button>
+    </div>
+    
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+<script>
+let dice = [];
+var antalTerninger = 0;
+  function changeClass(tal){
+  
+    var interaktiv = document.getElementById(tal);
+    if(interaktiv.className =="dice face-"+tal){
+      interaktiv.className = "one_selected face-"+tal;
+      dice.push(tal);
+      antalTerninger ++;
+    }
+
+    else if(interaktiv.className =="one_selected face-"+tal){
+      interaktiv.className = "both_selected face-"+tal;
+      dice.push(tal);
+      antalTerninger ++;
+    }
+
+    else if(interaktiv.className =="both_selected face-"+tal){
+      interaktiv.className = "dice face-"+tal;
+      dice.pop(tal);
+      dice.pop(tal);
+      antalTerninger = antalTerninger - 2;
+      
+    }
+    document.getElementById("myText").innerHTML = dice;
+    document.getElementById("terning").innerHTML = antalTerninger;   
+   }
+
+   function Beregn(){
+      if(antalTerninger==2){
+      dice.sort(function(a, b){return b - a});
+      document.getElementById("myText").innerHTML = dice;
+
+        const kast = dice.join('');
+        document.getElementById("kast").innerHTML = kast;
+
+          $.ajax({
+              type: "POST",
+              data: {
+                kast
+              },
+              url: "index.php",
+
+              success: function(msg){
+              $('.answer').html(msg);
+              }
+          });
+     }
+            else{
+                alert("Vælg KUN 2 terninger");
+                }
+   }
+   function Reset(tal){
+     dice = [];
+     kast = 0;
+     antalTerninger = 0;
+
+        document.getElementById("myText").innerHTML = dice;
+        document.getElementById("terning").innerHTML = antalTerninger;
+        document.getElementById("kast").innerHTML = kast;  
+        
+        
+        for (let i = 1; i <= 6; i++) {
+            var normal = document.getElementById(i);
+            normal.className = "dice face-"+i;
+            
+        }
+   }
+</script>
+  
+
+  <style>
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+body{
+  background-color: darkgreen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+/* Form og prikker */
+.dice {  
+  padding: 4px;  
+  background-color: white;  
+  width: 104px;  
+  height: 104px;  
+  border-radius: 10%;
+  margin-right: 10px;
+}
+
+.dot {
+  display: block;
+     width: 24px;
+     height: 24px;
+     border-radius: 50%;
+     background-color:black;
+  }
+
+/* Forskellige klasser */
+.one_selected{
+  padding: 4px;  
+  background-color:  #EBE72E;  
+  width: 104px;  
+  height: 104px;  
+  border-radius: 10%;
+  margin-right: 10px;
+}
+
+.both_selected{
+  padding: 4px;  
+  background: linear-gradient(to right bottom, #EBE72E 50%, #F15E22 50%);  
+  width: 104px;  
+  height: 104px;  
+  border-radius: 10%;
+  margin-right: 10px;
+}
+
+/* Forskellige terninger */
+
+/* 1. Terning */
+.face-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+/* 2. Terning */
+.face-2{
+  display: flex;
+  justify-content : space-between;
+  }
+
+.face-2 .dot:nth-of-type(1) {
+    align-self: flex-end;
+    }
+
+.face-2 .dot:nth-of-type(2) {
+  align-self: flex-start;
+  }
+
+  /* 3. Terning */
+  .face-3 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .face-3 .dot:nth-of-type(1) {
+    align-self :flex-end;
+  }
+  
+  .face-3 .dot:nth-of-type(2) {
+    align-self :center;
+  }  
+
+  /* 4. Terning */
+  .face-4 {
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .face-4 .column {
+      display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+  /* 5. Terning */
+  .face-5 {
+    display: flex;
+    justify-content: space-between;
+    }
+
+  .face-5 .column {
+      display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .face-5 .column:nth-of-type(2) {
+        justify-content: center;
+        }
+  /* 6. Terning */
+    .face-6 {
+      display: flex;
+      justify-content: space-between;
+     }
+      
+    .face-6 .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+     }
+  </style>

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MeyerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bruger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fornavn" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Efternavn" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="E-mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lobby_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Lobby">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bruger_ID" Type="int" Nullable="false" />
+          <Property Name="point" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '2022Meyer.dbo.sandsynlighed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sandsynlighed">
+          <Key>
+            <PropertyRef Name="Kas" />
+            <PropertyRef Name="Sandsynlighed" />
+          </Key>
+          <Property Name="Kas" Type="int" Nullable="false" />
+          <Property Name="Sandsynlighed" Type="decimal" Precision="4" Scale="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Bruger_Lobby">
+          <End Role="Lobby" Type="Self.Lobby" Multiplicity="0..1" />
+          <End Role="Bruger" Type="Self.Bruger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lobby">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bruger">
+              <PropertyRef Name="Lobby_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lobby_Bruger">
+          <End Role="Bruger" Type="Self.Bruger" Multiplicity="1" />
+          <End Role="Lobby" Type="Self.Lobby" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bruger">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lobby">
+              <PropertyRef Name="Bruger_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeyerModelStoreContainer">
+          <EntitySet Name="Bruger" EntityType="Self.Bruger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lobby" EntityType="Self.Lobby" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sandsynlighed" EntityType="Self.sandsynlighed" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sandsynlighed].[Kas] AS [Kas], 
+    [sandsynlighed].[Sandsynlighed] AS [Sandsynlighed]
+    FROM [dbo].[sandsynlighed] AS [sandsynlighed]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Bruger_Lobby" Association="Self.FK_Bruger_Lobby">
+            <End Role="Lobby" EntitySet="Lobby" />
+            <End Role="Bruger" EntitySet="Bruger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lobby_Bruger" Association="Self.FK_Lobby_Bruger">
+            <End Role="Bruger" EntitySet="Bruger" />
+            <End Role="Lobby" EntitySet="Lobby" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeyerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bruger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Efternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lobby_ID" Type="Int32" />
+          <NavigationProperty Name="Lobby" Relationship="Self.FK_Bruger_Lobby" FromRole="Bruger" ToRole="Lobby" />
+          <NavigationProperty Name="Lobby1" Relationship="Self.FK_Lobby_Bruger" FromRole="Bruger" ToRole="Lobby" />
+        </EntityType>
+        <EntityType Name="Lobby">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bruger_ID" Type="Int32" Nullable="false" />
+          <Property Name="point" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bruger" Relationship="Self.FK_Bruger_Lobby" FromRole="Lobby" ToRole="Bruger" />
+          <NavigationProperty Name="Bruger1" Relationship="Self.FK_Lobby_Bruger" FromRole="Lobby" ToRole="Bruger" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="sandsynlighed">
+          <Key>
+            <PropertyRef Name="Kast" />
+            <PropertyRef Name="Sandsynlighed1" />
+          </Key>
+          <Property Name="Kast" Type="Int32" Nullable="false" />
+          <Property Name="Sandsynlighed1" Type="Decimal" Precision="4" Scale="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bruger_Lobby">
+          <End Role="Lobby" Type="Self.Lobby" Multiplicity="0..1" />
+          <End Role="Bruger" Type="Self.Bruger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lobby">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bruger">
+              <PropertyRef Name="Lobby_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lobby_Bruger">
+          <End Role="Bruger" Type="Self.Bruger" Multiplicity="1" />
+          <End Role="Lobby" Type="Self.Lobby" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bruger">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lobby">
+              <PropertyRef Name="Bruger_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeyerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bruger" EntityType="Self.Bruger" />
+          <EntitySet Name="Lobby" EntityType="Self.Lobby" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="sandsynlighed" EntityType="Self.sandsynlighed" />
+          <AssociationSet Name="FK_Bruger_Lobby" Association="Self.FK_Bruger_Lobby">
+            <End Role="Lobby" EntitySet="Lobby" />
+            <End Role="Bruger" EntitySet="Bruger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lobby_Bruger" Association="Self.FK_Lobby_Bruger">
+            <End Role="Bruger" EntitySet="Bruger" />
+            <End Role="Lobby" EntitySet="Lobby" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeyerModelStoreContainer" CdmEntityContainer="MeyerEntities">
+          <EntitySetMapping Name="Bruger">
+            <EntityTypeMapping TypeName="MeyerModel.Bruger">
+              <MappingFragment StoreEntitySet="Bruger">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
+                <ScalarProperty Name="Efternavn" ColumnName="Efternavn" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Lobby_ID" ColumnName="Lobby_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lobby">
+            <EntityTypeMapping TypeName="MeyerModel.Lobby">
+              <MappingFragment StoreEntitySet="Lobby">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Bruger_ID" ColumnName="Bruger_ID" />
+                <ScalarProperty Name="point" ColumnName="point" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MeyerModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sandsynlighed">
+            <EntityTypeMapping TypeName="MeyerModel.sandsynlighed">
+              <MappingFragment StoreEntitySet="sandsynlighed">
+                <ScalarProperty Name="Kast" ColumnName="Kas" />
+                <ScalarProperty Name="Sandsynlighed1" ColumnName="Sandsynlighed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
