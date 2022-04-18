@@ -4,72 +4,95 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
  
-  <!--#Terning 1-->
-    <div onclick="changeClass(1)" class="dice face-1" id="1">
-          <span class="dot"> </span>
-    </div>
-   
-  <!--#Terning 2-->
-    <div onclick="changeClass(2)" class="dice face-2" id="2">
-        <span class="dot"> </span>
-        <span class="dot"> </span>
-    </div>
-    
-  <!--#Terning 3-->
-    <div onclick="changeClass(3)" class="dice face-3" id="3">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+<!--LOGO-->
+    <a href="#">
+      <h1 class="logo">Meyer!</h1>
+  </a>
+
+    <!--TITEL-->
+    <div class="titel">
+        <h1>Beregn din sandsynlighed</h1>
+        <h3>Vælg 2 terninger, for at beregne din sandsynlighed</h3>
     </div>
 
-  <!--#Terning 4-->
-  <div onclick="changeClass(4)" class="dice face-4" id="4">
-    <div class="column">
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    <div class="column">
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    </div>
-
-  <!--#Terning 5-->
-  <div onclick="changeClass(5)" class="dice face-5" id="5">
-  
-    <div class="column">
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-    
-    <div class="column">
-      <span class="dot"></span>
-    </div>
-    
-    <div class="column">
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
-  </div>
 
 
-  <!--#Terning 6-->
-  <div onclick="changeClass(6)" class="dice face-6" id="6">
-    <div class="column">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    <div class="column">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-     </div>
+    <div class="container">
+        <!--#Terning 1-->
+        <div onclick="changeClass(1)" class="dice face-1" id="1">
+            <span class="dot"> </span>
+        </div>
+
+        <!--#Terning 2-->
+        <div onclick="changeClass(2)" class="dice face-2" id="2">
+            <span class="dot"> </span>
+            <span class="dot"> </span>
+        </div>
+
+        <!--#Terning 3-->
+        <div onclick="changeClass(3)" class="dice face-3" id="3">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <!--#Terning 4-->
+        <div onclick="changeClass(4)" class="dice face-4" id="4">
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!--#Terning 5-->
+        <div onclick="changeClass(5)" class="dice face-5" id="5">
+
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <div class="column">
+                <span class="dot"></span>
+            </div>
+
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+
+        <!--#Terning 6-->
+        <div onclick="changeClass(6)" class="dice face-6" id="6">
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="column">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!--#KNAPPER-->
+        <button class="knap" onclick="Beregn()">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <span class="front text">
+                Beregn
+            </span>
+        </button>
     </div>
 
-  <!--#KNAPPER-->
     <div>
-      <br>
+        <br>
         <h1 id="myText"></h1>
 
         <h1 id="terning"></h1>
@@ -77,106 +100,359 @@
         <h1 id="kast"></h1>
     </div>
 
+    <!--Forrige kast-->
     <div>
-      <button onclick="Beregn()">Beregn</button>
-
-      <button onclick="Reset()">Reset</button>
+        <h1 id="ForrigKast"></h1>
     </div>
-    
 
+    <!--Output af sandsynlighed-->
+    <div class="output">
+        <h1 id="output"></h1>
+    </div>
+
+    <!--Import scripts til Ajax & Sweetalert-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+</body>
 
-<script>
-let dice = [];
-var antalTerninger = 0;
-  function changeClass(tal){
-  
-    var interaktiv = document.getElementById(tal);
-    if(interaktiv.className =="dice face-"+tal){
-      interaktiv.className = "one_selected face-"+tal;
-      dice.push(tal);
-      antalTerninger ++;
-    }
 
-    else if(interaktiv.className =="one_selected face-"+tal){
-      interaktiv.className = "both_selected face-"+tal;
-      dice.push(tal);
-      antalTerninger ++;
-    }
-
-    else if(interaktiv.className =="both_selected face-"+tal){
-      interaktiv.className = "dice face-"+tal;
-      dice.pop(tal);
-      dice.pop(tal);
-      antalTerninger = antalTerninger - 2;
+    <script>
+      //Array til at opbevare de terninger der bliver trykket på
+      let dice = [];
+      var antalTerninger = 0;
       
-    }
-    document.getElementById("myText").innerHTML = dice;
-    document.getElementById("terning").innerHTML = antalTerninger;   
-   }
-
-   function Beregn(){
-      if(antalTerninger==2){
-      dice.sort(function(a, b){return b - a});
-      document.getElementById("myText").innerHTML = dice;
-
-        const kast = dice.join('');
-        document.getElementById("kast").innerHTML = kast;
-
-          $.ajax({
-              type: "POST",
-              data: {
-                kast
-              },
-              url: "index.php",
-
-              success: function(msg){
-              $('.answer').html(msg);
-              }
-          });
-     }
-            else{
-                alert("Vælg KUN 2 terninger");
+      //Funktion changeClass, til interaktivt på terninger
+        function changeClass(tal){
+        
+            //Henter id fra terningerne
+            var interaktiv = document.getElementById(tal);
+      
+                if(interaktiv.className =="dice face-"+tal){
+                    //Skifter style fra stadie 1 til stadie 2.
+                    interaktiv.className = "one_selected face-"+tal;
+      
+                    //Giver id tal til array og giver +1 til variabel terning
+                    dice.push(tal);
+                    antalTerninger ++;
                 }
-   }
-   function Reset(tal){
-     dice = [];
-     kast = 0;
-     antalTerninger = 0;
-
-        document.getElementById("myText").innerHTML = dice;
-        document.getElementById("terning").innerHTML = antalTerninger;
-        document.getElementById("kast").innerHTML = kast;  
-        
-        
-        for (let i = 1; i <= 6; i++) {
-            var normal = document.getElementById(i);
-            normal.className = "dice face-"+i;
+      
+              ////Skifter style fra stadie 2 til stadie 3.
+              //Det helt samme
+              else if(interaktiv.className =="one_selected face-"+tal){
+                interaktiv.className = "both_selected face-"+tal;
+                dice.push(tal);
+                antalTerninger ++;
+              }
+      
+                //Skifter style fra stadie 3 til stadie 1.
+                else if(interaktiv.className =="both_selected face-"+tal){
+                  interaktiv.className = "dice face-"+tal;
+      
+                  //trækker to værdier ud af array + minusser variablen med 2.
+                  dice.pop(tal);
+                  dice.pop(tal);
+                  antalTerninger = antalTerninger - 2;
+                }  
+         }
+      
+         //Beregn funktion
+         function Beregn(){
+            if(antalTerninger==2){
+             
+            //Sortere array efter størst til mindst 
+            dice.sort(function(a, b){return b - a});
             
-        }
-   }
-</script>
-  
+            
+              //Sætter de to array sammen til en samlet string
+              var slag = dice.join('');
 
-  <style>
-.button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
+
+              //Laver string til int, da det skal bruges til switch
+              //Hvis slag er lille meyer eller meyer, lav om på rækkefølgen.
+              if(slag == 21){
+                slag = 12;
+              }
+      
+              else if(slag == 31){
+                slag = 13;
+                
+              }
+
+              else{
+                //laver string til int
+                slag = parseInt(slag);
+              }
+              
+            $.ajax({
+                    type: "POST",
+                    url: "/home/FåSandsynlighed",
+                    data: slag,
+                    success: function(good){
+                      console.log(slag.Sandsynlighed)
+                   }
+                    });
+              
+              /*
+              //Erklærer variabler der skal bruges senere til at vise sandsynligheden
+                      var sandsynlighed = 0;
+      
+                    //Switch cases.
+                      switch(slag){
+
+                        case 12: sandsynlighed = 5;
+                        break;
+
+                        case 13: sandsynlighed = 11,1;
+                        break;
+
+                        case 66: sandsynlighed = 13,9;
+                        break;
+
+                        case 55: sandsynlighed = 16,7;
+                        break;
+
+                        case 44: sandsynlighed = 19,4;
+                        break;
+
+                        case 33: sandsynlighed = 22,2;
+                        break;
+
+                        case 22: sandsynlighed = 25;
+                        break;
+
+                        case 11: sandsynlighed = 27,8;
+                        break;
+
+                        case 65: sandsynlighed = 33,3;
+                        break;
+
+                        case 64: sandsynlighed = 38,9;
+                        break;
+
+                        case 63: sandsynlighed = 44,4;
+                        break;
+
+                        case 62: sandsynlighed = 50;
+                        break;
+
+                        case 61: sandsynlighed = 55,6;
+                        break;
+
+                        case 54: sandsynlighed = 61,1;
+                        break;
+
+                        case 53: sandsynlighed = 66,7;
+                        break;
+
+                        case 52: sandsynlighed = 72,2;
+                        break;
+
+                        case 51: sandsynlighed = 77,8;
+                        break;
+
+                        case 43: sandsynlighed = 83,3;
+                        break;
+
+                        case 42: sandsynlighed = 88,9;
+                        break;
+
+                        case 41: sandsynlighed = 94,4;
+                        break;
+
+                        case 32: sandsynlighed = 100;
+                        break;
+                      }
+      */
+      
+                   
+      
+                      //Viser indtastet slag
+                      document.getElementById("ForrigKast").innerHTML = slag;
+                      
+                    //Output til hvad der bliver desplayed på hjemmesiden
+                    var output = "Sansynligheden for, at slå det samme eller højere er: <br/>"+ sandsynlighed +"%";
+                    document.getElementById("output").innerHTML = output;
+
+                //Kører funktionen reset
+                Reset();
+           }
+                  else{ 
+                        //Hvis to terninger ikke er valgt melder error/alert
+                        //Kører funktionen Reset(); & display alert
+                        Reset();
+                        Swal.fire("", "Vælg KUN 2 terninger", "warning");
+                      }
+      
+                      
+         }
+      
+         //Reset alle værdier, så man kan fortage sig ny beregning
+         function Reset(tal){
+      
+          //Reset variabler
+           dice = [];
+           slag = 0;
+           antalTerninger = 0;  
+              
+              //Sætter alle terninger til default
+              for (let i = 1; i <= 6; i++) {
+                  var normal = document.getElementById(i);
+                  normal.className = "dice face-"+i;
+                  
+              }
+         }
+        </script>
+
+<style>
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  text-decoration: underline;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 4em;
+  color: white;
+}
+
+
+.knap {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  touch-action: manipulation;
+  
+ }
+ 
+ .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform
+     600ms
+     cubic-bezier(.3, .7, .4, 1);
+ }
+ 
+ .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+     to left,
+     hsl(340deg 100% 16%) 0%,
+     hsl(340deg 100% 32%) 8%,
+     hsl(340deg 100% 32%) 92%,
+     hsl(340deg 100% 16%) 100%
+   );
+ }
+ 
+ .front {
+  display: block;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: white;
+  background: hsl(345deg 100% 47%);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform
+     600ms
+     cubic-bezier(.3, .7, .4, 1);
+ }
+ 
+ .knap:hover {
+  filter: brightness(110%);
+ }
+ 
+ .knap:hover .front {
+  transform: translateY(-6px);
+  transition: transform
+     250ms
+     cubic-bezier(.3, .7, .4, 1.5);
+ }
+ 
+ .knap:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+ }
+ 
+ .knap:hover .shadow {
+  transform: translateY(4px);
+  transition: transform
+     250ms
+     cubic-bezier(.3, .7, .4, 1.5);
+ }
+ 
+ .knap:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+ }
+ 
+ .knap:focus:not(:focus-visible) {
+  outline: none;
+ }
+
+ /**/
+
+.third {
+  background: cornflowerblue;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: 'Lato';
+  margin: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+}
+
+.third:hover {
+  background: orange;
 }
 
 body{
-  background-color: darkgreen;
+  background-color: rgb(30, 105, 30);
+  align-items: center;
+  justify-content: center;
+
+}
+
+.titel{
+  text-align: center;
+  color: white;
+}
+
+.container{
+  padding-top: 25px;
+  margin-right: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
- 
+}
+
+.output{
+  color: white;
+  text-align: center;
+  
+  align-items: center;
 }
 
 /* Form og prikker */
@@ -280,6 +556,7 @@ body{
       .face-5 .column:nth-of-type(2) {
         justify-content: center;
         }
+
   /* 6. Terning */
     .face-6 {
       display: flex;
@@ -291,4 +568,6 @@ body{
       flex-direction: column;
       justify-content: space-between;
      }
-  </style>
+</style>
+
+ 
