@@ -8,16 +8,16 @@
 
 <body>
     <nav>
-        <a href="@Url.Action("Index", "Home")"><h1 class="logo">Meyer!</h1></a><hr />
-        <h4 style="text-align:center;">Her får du en lille hjælp til reglerne for Meyer</h4>
+        <a href="@Url.Action("Index", "Home")"><h1 class="logo">Meyer!</h1></a><hr style="color: white;" />
+        <h4 style="text-align:center; color: white;">Her får du en lille hjælp til reglerne for Meyer</h4>
     </nav>
 
     <div class="container">
         <div class="card">
             <div class="box">
                 <div class="content">
-                    <img src="~/terning.png" alt="terning.png" />
-                    <h3>Sådan spiller du Meyer</h3>
+                    <img src="~/terning.png" alt="terning.png" />   <h3>Sådan spiller du Meyer</h3>
+                    
                     <p>Meyer er et spil, hvor det gælder om hele tiden at slå højere og højere kombinationer med to terninger.</p>
                     <a href="#">Read More</a>
                 </div>
@@ -89,7 +89,7 @@ body .container {
 body .container .card {
   position: relative;
   min-width: 320px;
-  height: 440px;
+  height: 500px;;
   box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
     inset -5px -5px 15px rgba(255, 255, 255, 0.1),
     5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
@@ -119,12 +119,13 @@ body .container .card .box {
   bottom: 20px;
   background: white;
   border-radius: 15px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   transition: 0.5s;
-  color: dimgrey
+  color: dimgrey;
+  /*padding: 20px;*/
 }
 
 body .container .card .box:hover {
@@ -186,6 +187,9 @@ body .container .card .box .content a:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   background: #fff;
   color: #000;
+}
+img {
+
 }
 
 </style>

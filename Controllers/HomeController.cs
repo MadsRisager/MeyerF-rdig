@@ -1,16 +1,16 @@
 ﻿using Meyer.Models;
-using MeyerFærdig.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace Meyer.Controllers
 {
     public class HomeController : Controller
     {
-        MeyerEntities db = new MeyerEntities();
+        
         public ActionResult Index()
         {
             return View();
@@ -69,5 +69,6 @@ namespace Meyer.Controllers
         {
             return View();
         }
+        MeyerEntities db = new MeyerEntities();
     }
 }

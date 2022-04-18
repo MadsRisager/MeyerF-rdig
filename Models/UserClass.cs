@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Meyer.Models
+namespace MeyerFærdig.Models
 {
     public class UserClass
     {
